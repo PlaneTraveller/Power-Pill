@@ -47,3 +47,37 @@ In the first half of this week, we are going to learn several tools by completin
 	 
 
 > <u>**Upload**:</u> Add the shell commands that you've learned to the previous markdown file, and share with us the differences of shells(zsh, bash, csh, fish, etc..)
+
+
+
+## Task 1: Crawl the data
+- Coding:
+	* Finding URLs (Automate later)
+	* Obtain Json data (with `requests`)
+	* Json data transcription (with `json`)
+	* Data organization and output (with `pandas`, `numpy`)
+
+
+
+- Structures
+	* readme structure
+	* repo structure
+
+
+
+- Determining data to obtain (considering task 3)
+
+
+
+### Learn
+|Content|Goal|
+|----|----|
+|<++>|<++>|
+|<++>|<++>|
+|<++>|<++>|
+|<++>|<++>|
+|<++>|<++>|
+|<++>|<++>|
+
+### Workflow
+- Determine 
