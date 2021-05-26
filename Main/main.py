@@ -2,15 +2,25 @@ import requests as req
 import json
 import pandas as pd
 
-#=== Pending: Obtaining website URL
+#--- Demo: Obtaining 52 csv files
 
-#=== Requesting data
+# Retrieving Input data
+with open('./Main/input/state_name.json') as fl:
+    stateStr = fl.read()
+stateDict = json.loads(stateStr)
 
-#--- Demo: CA, raw positive
-reqResp = req.get(
-    'https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/cases/CA.json')
-datDic = reqResp.json()
-datDF = pd.DataFrame.from_dict(datDic, orient='index')
-datDF.to_csv('./Main/output/DemoOut.csv')
+# Main Crawler
+# Obtaining data as dictionary
+for k in stateDict:
+    site = 'https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/cases/' + k + '.json'
+    reqResp = req.get(site, timeout=10)
+    datDic = reqResp.json()
+
+    # Data Structuring
+    datDF = pd.DataFrame.from_dict(datDic, orient='index')
+
+    # Data Output
+    outPath = './Main/output/' + stateDict[k] + '.csv'
+    datDF.to_csv(outPath)
 
 #--- Demo Finish

@@ -66,6 +66,9 @@ In the first half of this week, we are going to learn several tools by completin
 
 
 - Determining data to obtain (considering task 3)
+	* Vaccination
+	* Deaths
+	* Hospitalization (occupied rate of hospital beds of the state)
 
 
 
