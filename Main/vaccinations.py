@@ -9,6 +9,7 @@ with open('C:/Users/86183/Documents/Tencent Files/907881557/FileRecv/state_name.
 for key in state:
     vaccinations=requests.get('https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/vaccines/{}.json'.format(key))
     vaccinations=vaccinations.json()
+    print(vaccinations)
 # change the .json into a list
 
     data=pandas.DataFrame({},index=['doses_admin_daily','7_day_avg'])

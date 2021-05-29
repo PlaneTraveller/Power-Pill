@@ -11,6 +11,7 @@ for key in timeline:
 
     data_with_events=timeline[key]
     values=data_with_events['values']
+    print(values)
     new_confirmed_cases=values['new-confirmed-cases']
     new_deaths=values['new-deaths']
 # pick out useful data
