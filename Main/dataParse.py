@@ -22,10 +22,14 @@ DateIndexed Data:
 
 '''
 #===
-#=== Inputting rawJson
+#=== Retrieving Input data
 #===
-with open('./Main/input/rawJson.json') as fl:
-    rawDat = json.loads(fl)
+with open('./Main/input/state_name.json') as fl:
+    stateStr = fl.read()
+stateDict = json.loads(stateStr)
+
+dateDF = pd.read_csv('./Main/input/Date.csv')
+date = dateDF.iloc[:, 1]
 
 #===
 #=== Constructing Main Structure File
@@ -51,3 +55,18 @@ stateMuitiInd = pd.MultiIndex.from_product(iterables, names=['State', 'Date'])
 
 # Constructing 3-D DataFrame
 covDateIndexed = pd.DataFrame(index=stateMuitiInd)
+#===
+#=== Inputting rawJson
+#===
+with open('./Main/input/rawJson.json') as fl:
+    str = fl.read()
+    rawDat = json.loads(str)
+
+# rawPositive
+
+rawPositive = rawDat['rawPost']
+for state in rawPositive:
+    covDateIndexed[state] = pd.concat(covDateIndexed[state, list(date)],
+                                      rawPositive[state])
+
+print(covDateIndexed)

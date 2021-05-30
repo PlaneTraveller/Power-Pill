@@ -1,4 +1,6 @@
-# Power-Pill
+# <center>Power-Pill</center>
+
+<center><img src="./Pics/logo.JPG" width="60%" /></center>
 
 This is a project which we do Covid-19 data collection and analysis according to the information from [a website]([See the latest data in your region - Johns Hopkins Coronavirus Resource Center (jhu.edu)](https://coronavirus.jhu.edu/region)). The whole project is divided into three tasks, and detailed information will be shown below.
 
@@ -9,7 +11,6 @@ Our repository contains:
 * Record: This file records our plans and notes. It's a record of our learning process.
 * .DS_Store: It's a file that you can ignore it.
 * .gitignore: It's a file can be ignored too, as its name.
-* README: It's a very important little cute file and the author describe it as cute to check if her boyfriend reads it carefully.
 
 
 ## Table of Contents
