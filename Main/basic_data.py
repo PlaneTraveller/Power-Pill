@@ -4,9 +4,9 @@ import pandas
 timeline = requests.get(
     'https://coronavirus.jhu.edu/datasets/state_timeline.json')
 timeline = timeline.json()
-
+dt = pandas.DataFrame.from_dict(timeline)
+print(dt)
 # change the .json into a dict
-print(timeline['Alaska'])
 for key in timeline:
     data = pandas.DataFrame({},
                             index=[
