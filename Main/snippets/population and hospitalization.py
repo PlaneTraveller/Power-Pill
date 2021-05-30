@@ -3,6 +3,8 @@ import pandas
 import json
 
 a=requests.get('https://jhucoronavirus.azureedge.net/jhucoronavirus/state_vaccination_rates.json')
+########## json!!!!!!!!!!
+
 a=a.json()
 name=globals()
 global c
@@ -23,10 +25,31 @@ for i in range(0,len(a)):
 
 for i in range(0,len(a)-1):
     g0=pandas.concat([g0,name['g'+str(i+1)]])
+########## DataFrame!!!!!!!!!!
+
 g0.to_csv('C:/Git/Power-Pill/Main/output/population.csv')
 # all populations are combined and output
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 a=requests.get('https://jhucoronavirus.azureedge.net/jhucoronavirus/hospitalization_by_state.json')
+########## json1!!!!!!!!!!
+
 a=a.json()
 with open('C:/Users/86183/Documents/Tencent Files/907881557/FileRecv/state_name.json') as state:
     state=json.load(state)
@@ -52,6 +75,8 @@ for i in range(0,len(a)-1):
 i=0
 for key in state:
     a=requests.get('https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/hospitalization/{}.json'.format(key))
+########## json2!!!!!!!!!!
+
     a=a.json()
     a=a[0]
     a=pandas.DataFrame.from_dict(a,orient=('index'))
@@ -82,5 +107,7 @@ for key in state:
     i=i+1
     value=value.loc['state','beds']
     hospitalization=a.div(value)
+########## DataFrame!!!!!!!!!!
+
     hospitalization.to_csv('C:/Git/Power-Pill/Main/output/{}_hospitalization.csv'.format(state[key]))
 # the final rate
