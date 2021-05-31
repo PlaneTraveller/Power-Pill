@@ -5,6 +5,7 @@ import json
 with open('./Main/input/state_name.json') as state:
     state = json.load(
         state) # read in the state name file and change the .json into a dict
+
 for key in state:
     vaccinations = requests.get(
         'https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/vaccines/{}.json'

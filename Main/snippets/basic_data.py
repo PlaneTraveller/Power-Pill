@@ -58,6 +58,6 @@ for key in timeline:
 
     output = pandas.DataFrame(data)
     output = output.T
-########## DataFrame!!!!!!!!!!
-#    output.to_csv('C:/Git/Power-Pill/Main/output/{}_timeline.csv'.format(key))
+    ########## DataFrame!!!!!!!!!!
+    output.to_csv('C:/Git/Power-Pill/Main/output/{}_timeline.csv'.format(key))
 # generate a .csv whose name can be filled with the state name automatically
