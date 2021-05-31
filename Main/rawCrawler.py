@@ -29,17 +29,20 @@ def getDF(siteFrame):
     ret = {}
     # Obtaining data as dictionary
 
-    for k in stateDict:
-
-        site = siteFrame.format(k)
+    if '{}' not in siteFrame:
+        site = siteFrame
         reqResp = req.get(site, timeout=10)
-        datDic = reqResp.json()
+        ret = reqResp.json()
 
-        # Rudementary Data Structuring
-        ret[k] = datDic
+    else:
+        for k in stateDict:
 
-        if '{}' not in siteFrame:
-            break
+            site = siteFrame.format(k)
+            reqResp = req.get(site, timeout=10)
+            datDic = reqResp.json()
+
+            # Rudementary Data Structuring
+            ret[k] = datDic
 
     return ret
 
@@ -54,7 +57,9 @@ urlDict = {
     'D&C':
     'https://coronavirus.jhu.edu/datasets/state_timeline.json',
     'Vaccination':
-    'https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/vaccines/{}.json'
+    'https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/vaccines/{}.json',
+    'P&H':
+    'https://jhucoronavirus.azureedge.net/jhucoronavirus/state_vaccination_rates.json'
 }
 
 rawDat = urlDict
