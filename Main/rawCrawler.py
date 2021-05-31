@@ -59,7 +59,11 @@ urlDict = {
     'Vaccination':
     'https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/vaccines/{}.json',
     'P&H':
-    'https://jhucoronavirus.azureedge.net/jhucoronavirus/state_vaccination_rates.json'
+    'https://jhucoronavirus.azureedge.net/jhucoronavirus/state_vaccination_rates.json',
+    'Hosp1':
+    'https://jhucoronavirus.azureedge.net/jhucoronavirus/hospitalization_by_state.json',
+    'Hosp2':
+    'https://jhucoronavirus.azureedge.net/api/v1/timeseries/us/hospitalization/{}.json'
 }
 
 rawDat = urlDict

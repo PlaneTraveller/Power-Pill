@@ -76,25 +76,31 @@ def datStruct_Indexed(datStruct, parsedDF):
     return ret
 
 
+def datStruct_Single(datStruct, parsedSing):
+    ret = datStruct
+    ret = pd.concat([ret, parsedSing])
+    return ret
+
+
+datList = []
+singList = []
+
 #===
 #=== Parsing
 #===
 
 # Inputting Json
 with open('./Main/input/rawJson.json') as fl:
-    str = fl.read()
-    rawDat = json.loads(str)
-
-datList = []
+    str1 = fl.read()
+    rawDat = json.loads(str1)
 
 # rawPositive (CHECK)
 rawPositive = rawDat['rawPost']
-
 datList.append(rawPositive)
+
 # D&C
 DnCOut = {}
 timeline = rawDat['D&C']
-
 #= Code from Snippets
 for key in timeline:
     data = pd.DataFrame({},
@@ -144,23 +150,20 @@ for key in timeline:
 #combine the two dataframe and then add the column to the dataframe
 
     output = pd.DataFrame(data)
-    output = output.T
+    #    output = output.T
     #= Code End
 
     # Link
     buf = output.to_dict()
     short = list(stateDict.keys())[list(stateDict.values()).index(key)]
     DnCOut[short] = buf
-
 # Out: DnCOut
 datList.append(DnCOut)
 
 # Vaccination
 vacDat = rawDat['Vaccination']
 vacOut = {}
-
 #= Code from Snippets
-
 for key in vacDat:
     vaccinations = vacDat[key]
 
@@ -175,29 +178,123 @@ for key in vacDat:
         # add the column to the dataframe
 
     output = pd.DataFrame(data)
-    output = output.T
+    #    output = output.T
     # Link
     buf = output.to_dict()
     vacOut[key] = buf
-
 # Out: vacOut
-
 datList.append(vacOut)
 
-# Hospitalization
-pass
+# Population
+a = rawDat['P&H']
 
-# Feeding into datStruct_Indexed
+#= Code from Snippets
+name = globals()
+global c
+for i in range(0, len(a)):
+    b = a[i]
+    c = b['state']
+    d = b['data']
+    e = d['raw_full_vac']
+    f = d['percent_full_vac']
+    # pick out date used for caculate population
 
-struct = covDateIndexed
-for item in datList:
-    struct = datStruct_Indexed(struct, item)
+    population = dict(state=int(100 * e / f))
+    population[c] = population.pop('state')
+    g = pd.DataFrame.from_dict(population, orient=('index'))
+    g.columns = ['population']
+    name['g' + str(i)] = g
+# population for evert state is named differently
+for i in range(0, len(a) - 1):
+    g0 = pd.concat([g0, name['g' + str(i + 1)]])
+
+#= Code End
+PnHOut = g0
+singList.append(PnHOut)
+
+# Hospitalization and beds
+HospRateOut = {}
+a = rawDat['Hosp1']
+a2 = rawDat['Hosp2']
+
+#= Code from Snippets
+
+for i in range(0, len(a)):
+    b = a[i]
+    if b['state'] == 'VI':
+        name['rate' + str(i)] = None
+# an unknown data, removed
+
+    else:
+        b = b['data']
+        b = b['inpatient']
+        b = b['covid']
+        rate = dict(state=b)
+        rate = pd.DataFrame.from_dict(rate, orient=('index'))
+        name['rate' + str(i)] = rate
+for i in range(0, len(a) - 1):
+    rate0 = pd.concat([rate0, name['rate' + str(i + 1)]])
+# hospitalizaton rate for every state for this week is picked out
+
+i = 0
+for key in a2:
+    a = a2[key]
+    a = a[0]
+    a = pd.DataFrame.from_dict(a, orient=('index'))
+    b = a[-1:]
+    b.index = [stateDict[key]]
+    b = b.loc[stateDict[key], '7_day_avg']
+    value = dict(state=b)
+    value = pd.DataFrame.from_dict(value, orient=('index'))
+    name['value' + str(i)] = value
+    n = i
+    i = i + 1
+    a = a.loc[:, ['inpatient_beds_used_covid'
+                  ]] # hospitalization value for all dates
+for i in range(0, n):
+    value0 = pd.concat([value0, name['value' + str(i + 1)]])
+# hospitalization value for every state for this week is picked out
+
+rate_and_value = pd.concat([rate0, value0], axis=1)
+beds = value0.div(rate0)
+beds.columns = ['beds']
+# the beds' number is caculated
+
+beds = beds.multiply(100)
+# can be deleted to make the result combined with %
+
+for key in stateDict:
+    i = 0
+    value = beds[i:i + 1]
+    i = i + 1
+    value = value.loc['state', 'beds']
+    hospitalization = a.div(value)
+    hospitalization = hospitalization.T
+
+#= Code End
+HospRateOut = hospitalization
+datList.append(HospRateOut)
+
+beds.reindex_like(hospitalization)
+bedCountOut = beds
+covSingle.append(bedCountOut)
 
 #===
 #=== Outputting
 #===
 
-struct.to_csv('./Main/outPut/Struct.csv')
+# Feeding into datStruct_Indexed
+structIndexed = covDateIndexed
+for item in datList:
+    structIndexed = datStruct_Indexed(structIndexed, item)
+
+# Feeding into datStruct_Indexed
+structSingle = covSingle
+for item in singList:
+    structSingle = datStruct_Single(structSingle, item)
+
+structIndexed.to_csv('./Main/outPut/StructIndexed.csv')
+structSingle.to_csv('./Main/outPut/StructSingle.csv')
 
 #UltiJson = struct.to_json()
 #
