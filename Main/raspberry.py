@@ -3,12 +3,12 @@ import csv
 from gpiozero import LED
 from time import sleep
 
-with open('./Main/input/state_name.json') as fl:
+with open('../Main/input/state_name.json') as fl:
     stateStr = fl.read()
 stateDict = json.loads(stateStr)
 
 #Data reader
-with open('./Main/oldOut/California.csv') as fl:
+with open('../Main/oldOut/California.csv') as fl:
     CARaw = csv.reader(fl)
     DatList = []
     check = True
@@ -27,7 +27,7 @@ red = LED(26)
 def flash():
     red.on()
     blue.on()
-    sleep(0.1)
+    sleep(0.2)
     red.off()
     blue.off()
     sleep(0.5)
