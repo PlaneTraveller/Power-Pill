@@ -5,12 +5,12 @@ from gpiozero import LED
 from time import sleep
 '''
 
-with open('../Main/input/state_name.json') as fl:
+with open('./Main/input/state_name.json') as fl:
     stateStr = fl.read()
 stateDict = json.loads(stateStr)
 
 #Data reader
-with open('../Main/oldOut/California.csv') as fl:
+with open('./Main/oldOut/California.csv') as fl:
     CARaw = csv.reader(fl)
     DatList = []
     check = True
@@ -20,7 +20,6 @@ with open('../Main/oldOut/California.csv') as fl:
             continue
         DatList.append(int(float(row[1])))
 DatList.pop(0)
-
 '''
 # basic code
 blue = LED(19)
@@ -40,7 +39,7 @@ RevList = []
 for i in range(len(DatList)):
     RevList.append(DatList[len(DatList) - i - 1])
 
-BinList= []
+BinList = []
 for Rev in RevList:
     Bin = bin(Rev)
     Bin = Bin[2:]
@@ -50,6 +49,12 @@ big = '0'
 for bin in BinList:
     if len(bin) > len(big):
         big = bin
-print(len(big))
 
+digitedBin = []
+for bin in BinList:
+    tempBin = bin
+    while (len(tempBin) < len(big)):
+        tempBin = '0' + tempBin
+    digitedBin.append(tempBin)
 
+# Outputting digitedBin with the data at the most digit.
