@@ -54,14 +54,14 @@ def fastFlash():
         sleep(0.2)
 
 
-for i in range(len(DatList)):
-    if DatList[i + 1] > DatList[i]:
-        red.on()
-        sleep(1)
-        red.off()
-        sleep(1)
-    else:
-        sleep(2)
+# for i in range(len(DatList)):
+#     if DatList[i + 1] > DatList[i]:
+#         red.on()
+#         sleep(1)
+#         red.off()
+#         sleep(1)
+#     else:
+#         sleep(2)
 
 # bonus code
 RevList = []
@@ -92,6 +92,6 @@ for bin in BinList:
 for bin in digitedBin:
     tempBin = list(bin)
     while tempBin != []:
-        sig(bin.pop(0), bin.pop(0))
+        sig(tempBin.pop(0), tempBin.pop(0))
         flash()
     fastFlash()
