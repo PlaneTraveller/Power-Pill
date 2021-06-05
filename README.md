@@ -9,6 +9,7 @@ Our repository contains:
 * Check: It's the most important part. There store our ordered final achievements of three tasks.
 * Main: All of our codes, whether it's useful or not, are in this file, which may seems a little messy.
 * Record: This file records our plans and notes. It's a record of our learning process.
+* Pict: It includes our team logo. 
 * .DS_Store: It's a file that you can ignore it.
 * .gitignore: It's a file can be ignored too, as its name.
 
@@ -52,20 +53,30 @@ In this task, we collect information about Covid-19 in American 52 states from a
 1. We collect infection, hospitalization and vaccination information in American52 states using the *state_name.json* provided, not hard coding.
 2. We dispose the output using the library panda and we also learn to integrate all of the 52 tables into one, representing like a "3D chart", which enables us to analyze it more easily in the following tasks.
 
-### What we get in the task；
+### What we get in the task:
 
-We finally get a file storing all the data crawled from the website in the form of a 3D chart.
+We finally get a file storing all the data crawled from the website in the form of a chart more than 3D, which includes many keys.
 
 
 ## **Task 2**
 
 ### Introduction:
 
+In this task, we do the data visualization with pyechart and control LED light to show some results in raspberryPi.
+
 ### What we learn in the task:
+
+1. We learn how to use many python libraries: pyecharts, snapshot_selenium, phantomjs, imageio and so on.
+2. We learn how to connect raspberry under many confusing situations, which is somehow one of the hardest part in this task.
 
 ### What we do in the task:
 
-### What we get in the task；
+1. We display the results in an American map which contains the data from 2020.1 till now in the form of gif.
+2. We visualize the information of one state on raspberry and design a more complex result with binary encoding. 
+
+### What we get in the task:
+
+
 
 
 ## **Task 3**
@@ -76,7 +87,7 @@ We finally get a file storing all the data crawled from the website in the form 
 
 ### What we do in the task:
 
-### What we get in the task；
+### What we get in the task:
 
 
 ## Contributing
