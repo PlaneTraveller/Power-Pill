@@ -20,48 +20,50 @@ with open('../Main/oldOut/California.csv') as fl:
 DatList.pop(0)
 
 # basic code
-blue = LED(19)
+green = LED(19)
 red = LED(26)
 
 
 def flash():
     red.on()
-    blue.on()
+    green.on()
     sleep(0.2)
     red.off()
-    blue.off()
+    green.off()
     sleep(0.5)
 
 
-def sig(r, b):
+def sig(r, g):
     if r == '1':
         red.on()
-    if b == '1':
-        blue.on()
+    if g == '1':
+        green.on()
     sleep(0.7)
     red.off()
-    blue.off()
+    green.off()
     sleep(0.5)
 
 
 def fastFlash():
     for i in range(3):
         red.on()
-        blue.on()
+        green.on()
         sleep(0.1)
         red.off()
-        blue.off()
+        green.off()
         sleep(0.2)
 
 
-# for i in range(len(DatList)):
-#     if DatList[i + 1] > DatList[i]:
-#         red.on()
-#         sleep(1)
-#         red.off()
-#         sleep(1)
-#     else:
-#         sleep(2)
+def compareRaw():
+    for i in range(len(DatList)):
+        if DatList[i + 1] > DatList[i]:
+            red.on()
+            sleep(1)
+            red.off()
+            sleep(1)
+        else:
+            sleep(2)
+
 
 # bonus code
 RevList = []
@@ -88,10 +90,12 @@ for bin in BinList:
 
 # Outputting digitedBin with the data at the most digit.
 
-# Controling the Diodes: <red><blue>
-for bin in digitedBin:
-    tempBin = list(bin)
-    while tempBin != []:
-        sig(tempBin.pop(0), tempBin.pop(0))
-        flash()
-    fastFlash()
+
+# Controling the Diodes: <red><green>
+def weirdCode():
+    for bin in digitedBin:
+        tempBin = list(bin)
+        while tempBin != []:
+            sig(tempBin.pop(0), tempBin.pop(0))
+            flash()
+        fastFlash()
