@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Selecting data
-with open('C:\Git\Power-Pill\Main\oldOut\California.csv') as fl:
+with open('./Main/oldOut/California.csv') as fl:
     rawDat = pd.read_csv(fl)
 
 date = rawDat.iloc[260:320, 0]
@@ -23,9 +23,7 @@ tempKeys = list(posDict.keys())
 keys = []
 for k in tempKeys:
     keys.append(float(k))
-k = 0
-b = 0
-alpha = 0.00001
+
 param = {'k': 0, 'b': 0}
 
 
@@ -33,7 +31,7 @@ param = {'k': 0, 'b': 0}
 def computeCost(param, data):
     RRS = 0
     for key in data:
-        RRS += (data[key] - param['k'] * key - param['b'])
+        RRS += (data[key] - param['k'] * key - param['b']) ** 2
     return RRS
 
 
@@ -57,17 +55,19 @@ def gradDesc(param, data, alpha):
 # linear Regression
 def linReg(paramInit, data):
     tempParam = paramInit
-    alpha = 0.00000001
-    costChange = [0]
-    delta = 100
-    while delta > 0.1 or delta < -0.1:
+    alpha = 0.0000001
+    costChange = [1000000000000000000000]
+    delta = -1
+    while delta < -0.01:
         tempParam = gradDesc(tempParam, data, alpha)
         costChange.append(computeCost(tempParam, data))
         delta = costChange[-1] - costChange[-2]
+        print(delta)
     return tempParam, costChange
 
 
 finalParam, cost = linReg(param, posDict)
+print(cost)
 plt.scatter(list(posDict.keys()), list(posDict.values()))
 l = []
 for k in keys:
