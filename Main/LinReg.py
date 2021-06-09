@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Selecting data
-with open('./Main/oldOut/California.csv') as fl:
+with open('C:\Git\Power-Pill\Main\oldOut\California.csv') as fl:
     rawDat = pd.read_csv(fl)
 
 date = rawDat.iloc[260:320, 0]
