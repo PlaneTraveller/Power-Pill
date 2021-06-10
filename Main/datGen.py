@@ -9,8 +9,10 @@ from sklearn.model_selection import train_test_split
 
 model = pipeline.make_pipeline(PolynomialFeatures(28),
                                linear_model.LinearRegression())
+
 with open('./Main/oldOut/California.csv') as csv:
     input = pandas.read_csv(csv)
+
 input['number'] = input.index.values
 date = input.iloc[260:320, 3].values
 date = date[:, numpy.newaxis]
@@ -24,6 +26,7 @@ MSE = mean_squared_error(case_train, model.predict(date_train))
 px = numpy.linspace(date_train.min(), date_train.max(), 1000)
 px = px.reshape(-1, 1)
 pred_py = model.predict(px)
+
 pyplot.scatter(date_train, case_train, s=60)
 pyplot.plot(px, pred_py)
 pyplot.tight_layout()
