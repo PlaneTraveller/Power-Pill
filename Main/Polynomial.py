@@ -19,6 +19,7 @@ date_train, date_test, case_train, case_test = train_test_split(date,
                                                                 case,
                                                                 test_size=0.3)
 model.fit(date_train, case_train)
+print(type(case_train))
 
 MSE = mean_squared_error(case_train, model.predict(date_train))
 px = numpy.linspace(date_train.min(), date_train.max(), 1000)

@@ -1,33 +1,34 @@
-import numpy
-import pandas
-import matplotlib.pyplot as pyplot
-import sklearn.pipeline as pipeline
+import numpy as np
+import pandas as pd
+import json
 import sklearn.linear_model as linear_model
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.model_selection import train_test_split
 
-model = pipeline.make_pipeline(PolynomialFeatures(28),
-                               linear_model.LinearRegression())
+# Initialization
+path = "./Main/oldOut/{}.csv"
+model = linear_model.LinearRegression()
 
-with open('./Main/oldOut/California.csv') as csv:
-    input = pandas.read_csv(csv)
+with open('./Main/input/state_name.json') as fl:
+    stateStr = fl.read()
+stateDict = json.loads(stateStr)
 
-input['number'] = input.index.values
-date = input.iloc[260:320, 3].values
-date = date[:, numpy.newaxis]
-case = input.iloc[260:320, 1].values
-date_train, date_test, case_train, case_test = train_test_split(date,
-                                                                case,
-                                                                test_size=0.3)
-model.fit(date_train, case_train)
+paramDict = {}
 
-MSE = mean_squared_error(case_train, model.predict(date_train))
-px = numpy.linspace(date_train.min(), date_train.max(), 1000)
-px = px.reshape(-1, 1)
-pred_py = model.predict(px)
+for stShort in stateDict:
+    with open(path.format(stateDict[stShort])) as fl:
+        rawDat = pd.read_csv(fl)
 
-pyplot.scatter(date_train, case_train, s=60)
-pyplot.plot(px, pred_py)
-pyplot.tight_layout()
-pyplot.show()
+    rawDict = dict(rawDat.iloc[260:320, 1])
+    x = list(rawDict.keys())
+    x = np.array(x)
+    x = x.reshape(-1, 1)
+    y = list(rawDict.values())
+    y = np.array(y)
+    y = y.reshape(-1, 1)
+
+    model.fit(x, y)
+    paramDict[stateDict[stShort]] = [model.coef_[0][0], model.intercept_[0]]
+
+# Outputting
+out = json.dumps(paramDict)
+with open('./Main/input/paramDict.json', "w") as fl:
+    fl.write(out)

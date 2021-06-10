@@ -9,7 +9,6 @@ with open('./Main/oldOut/California.csv') as fl:
 
 date = rawDat.iloc[260:320, 0]
 rawPos = rawDat.iloc[260:320, 1]
-posDF = rawDat.iloc[260:320, :]
 
 # Data Spliting
 date_Trn, date_Tst, rawP_Trn, rawP_Tst = train_test_split(date,
