@@ -19,6 +19,7 @@ date_Trn, date_Tst, rawP_Trn, rawP_Tst = train_test_split(date,
 
 # Setting Parameters
 posDict = dict(rawP_Trn)
+tstDict = dict(rawP_Tst)
 tempKeys = list(posDict.keys())
 keys = []
 for k in tempKeys:
@@ -61,16 +62,29 @@ def linReg(paramInit, data):
     while costChange[-1] > 488821661:
         tempParam = gradDesc(tempParam, data, alpha)
         costChange.append(computeCost(tempParam, data))
-        print(costChange[-1])
-
+        # print(costChange[-1])
 
 #         delta = costChange[-1] - costChange[-2]
     return tempParam, costChange
 
+
+# Calculating MSE
+def calcMSE(param, data):
+    ret = computeCost(param, data) / len(data)
+    return ret
+
+
+# Calling
 finalParam, cost = linReg(param, posDict)
+
+# Plotting
 plt.scatter(list(posDict.keys()), list(posDict.values()))
 l = []
 for k in keys:
     l.append(finalParam['k'] * k + finalParam['b'])
 plt.plot(keys, l, c='r')
-plt.show()
+# plt.show()
+
+# MSE
+MSE = calcMSE(finalParam, tstDict)
+print(MSE)
