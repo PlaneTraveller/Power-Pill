@@ -24,7 +24,7 @@ keys = []
 for k in tempKeys:
     keys.append(float(k))
 
-param = {'k': 0, 'b': 0}
+param = {'k': 330, 'b': -87000}
 
 
 # Cost Function
@@ -56,22 +56,21 @@ def gradDesc(param, data, alpha):
 def linReg(paramInit, data):
     tempParam = paramInit
     alpha = 0.0000001
-    costChange = [1000000000000000000000]
-    delta = -1
-    while delta < -0.01:
+    costChange = [10000000000]
+    #    delta = -1
+    while costChange[-1] > 488821661:
         tempParam = gradDesc(tempParam, data, alpha)
         costChange.append(computeCost(tempParam, data))
-        delta = costChange[-1] - costChange[-2]
-        print(delta)
+        print(costChange[-1])
+
+
+#         delta = costChange[-1] - costChange[-2]
     return tempParam, costChange
 
-
 finalParam, cost = linReg(param, posDict)
-print(cost)
 plt.scatter(list(posDict.keys()), list(posDict.values()))
 l = []
 for k in keys:
     l.append(finalParam['k'] * k + finalParam['b'])
-
 plt.plot(keys, l, c='r')
 plt.show()
