@@ -10,9 +10,12 @@ plt.style.use('ggplot')
 # a different style
 
 # Draw the initial chart
-data = pd.read_csv()
-f1 = data['V1'].values
-f2 = data['V2'].values
+# data = pd.read_csv()
+# f1 = data['V1'].values
+# f2 = data['V2'].values
+f1 = np.array([44, 16, 57, 61, 10, 42, 9, 68, 62, 35, 7, 48])
+f2 = np.array([44, 4, 13, 18, 10, 34, 15, 10, 6, 40, 5, 36])
+
 X = np.array(list(zip(f1, f2)))
 plt.scatter(f1, f2, c='black', s=6)
 
@@ -24,8 +27,8 @@ def dist(a, b, ax=1):
 
 # Pick out three lucky points
 k = 3
-C_x = np.random.randint(0, np.max(X) - 20, size=k) #(min,max,size)
-C_y = np.random.randint(0, np.max(X) - 20, size=k)
+C_x = np.random.randint(np.min(X), np.max(X), size=k) #(min,max,size)
+C_y = np.random.randint(np.min(X), np.max(X), size=k)
 C = np.array(list(zip(C_x, C_y)), dtype=np.float32)
 # Plot the random 3 points on initial chart
 plt.scatter(f1, f2, c='black', s=7)
@@ -38,6 +41,7 @@ iteration_flag = dist(C, C_old, 1)
 
 tmp = 1
 # If the center points don't change any more or tmp = 20
+points = pd.DataFrame()
 while iteration_flag.any() != 0 and tmp < 20:
     for i in range(len(X)):
         distances = dist(X[i], C, 1)
@@ -57,6 +61,7 @@ colors = ['r', 'g', 'b', 'y', 'c', 'm']
 fig, ax = plt.subplots()
 # Give different colors to different group
 for i in range(k):
-    points = np.array([X[j] for j in range(len(X)) if clusters[j] == i])
+    points.iloc[:, 1] = np.array(
+        [X[j] for j in range(len(X)) if clusters[j] == i])
     ax.scatter(points[:, 0], points[:, 1], s=7, c=colors[i])
 ax.scatter(C[:, 0], C[:, 1], marker='*', s=200, c='black')
